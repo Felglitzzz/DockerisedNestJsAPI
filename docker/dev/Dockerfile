@@ -1,8 +1,10 @@
 FROM node:8.4.0
 
-WORKDIR ../../../DockerisedNestJsAPI
+RUN mkdir -p /usr/src/app
 
-COPY . ../../../DockerisedNestJsAPI
+WORKDIR /usr/src/app
+
+COPY . .
 
 RUN npm install
 
