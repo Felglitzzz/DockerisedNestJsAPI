@@ -11,9 +11,20 @@ import { UserModel } from './identity/user/userModel'
 
 import { EventModel } from './shared/event/eventModel'
 
-const databaseProvider: FactoryProvider = {
-  provide: TYPES.AsyncDatabaseConnection,
-  useFactory: async () => await createConnection({
+let databaseCredentials
+
+if (process.env.NODE_ENV === 'production') {
+  databaseCredentials = {
+    type: 'postgres',
+    url: process.env.DATABASE_URL,
+    entities: [
+      PermissionModel, ResourceModel, RoleModel, UserModel, EventModel,
+    ],
+    synchronize: true,
+    logging: process.env.DATABASE_LOGGING === 'true',
+  }
+} else {
+  databaseCredentials = {
     type: 'postgres',
     host: process.env.POSTGRES_HOST,
     port: Number.parseInt(process.env.POSTGRES_PORT, 2),
@@ -25,7 +36,13 @@ const databaseProvider: FactoryProvider = {
     ],
     synchronize: true,
     logging: process.env.DATABASE_LOGGING === 'true',
-  }),
+  }
+}
+
+
+const databaseProvider: FactoryProvider = {
+  provide: TYPES.AsyncDatabaseConnection,
+  useFactory: async () => await createConnection(databaseCredentials),
 }
 
 @Global()
