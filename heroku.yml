@@ -2,4 +2,4 @@ setup:
   config: {}
 build:
   docker:
-    web: docker/dev/Dockerfile
+    web: Dockerfile
