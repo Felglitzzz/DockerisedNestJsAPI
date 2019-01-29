@@ -1,6 +1,6 @@
 FROM node:8.4.0
 
-WORKDIR /DockerisedNestJsAPI
+WORKDIR ../../../DockerisedNestJsAPI
 
 COPY . /DockerisedNestJsAPI
 
