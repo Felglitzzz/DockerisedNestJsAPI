@@ -20,7 +20,7 @@ import { NatsModule } from './natsModule'
 
 import { IdentityModule } from './identity/identityModule'
 
-const port = Number.parseFloat(process.env.APP_PORT)
+const port = Number.parseFloat(process.env.PORT)
 const url = process.env.APP_URL
 
 const statusMonitorConfig: StatusMonitorConfiguration = {
