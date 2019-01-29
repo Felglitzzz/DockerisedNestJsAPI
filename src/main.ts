@@ -5,7 +5,7 @@ import * as bodyParser from 'body-parser'
 import { ApplicationModule } from './applicationModule'
 import { ValidationPipe } from './utils/validatorPipe'
 
-const port = process.env.APP_PORT
+const port = process.env.PORT
 
 async function bootstrap() {
   const application = await NestFactory.create(ApplicationModule)

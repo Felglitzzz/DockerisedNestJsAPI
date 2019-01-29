@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
     entities: [
       PermissionModel, ResourceModel, RoleModel, UserModel, EventModel,
     ],
-    synchronize: true,
+    port: process.env.POSTGRES_PORT,
     logging: process.env.DATABASE_LOGGING === 'true',
   }
 } else {
