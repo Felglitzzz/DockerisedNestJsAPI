@@ -8,8 +8,8 @@ services:
       - "5432"
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=test
-      - POSTGRES_DB=test
+      - POSTGRES_PASSWORD=caryourday
+      - POSTGRES_DB=test_myandela
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -19,20 +19,45 @@ services:
   nats:
     image: nats:latest
 
-  test:
+  web:
     build:
       context: ../../
       dockerfile: docker/dev/Dockerfile
-    command: ["npm", "run", "test:cov"]
+    ports:
+     - "3000:3000"
+    command: ["npm", "run", "start"]
     links:
-     - database
+      - database
     environment:
-      POSTGRES_HOST: database
-      POSTGRES_PORT: 5432
-      POSTGRES_USERNAME: postgres
-      POSTGRES_PASSWORD: test
-      POSTGRES_DATABASE: test
-      NATS_URL: nats://nats:4222
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=caryourday
+      - POSTGRES_DB=test_myandela
+      - AUTH0_DOMAIN=my-andela.auth0.com
+      - AUTH0_CLIENT_ID=123456789
+      - AUTH0_CLIENT_SECRET=123456789
+      - JWT_AUTH_PUBLIC_KEY=123456789
+      - JWT_AUTH_PRIVATE_KEY=123456789
+      - GOOGLE_CLIENT_ID=51rbeANxGFcFt0HotI7gZws7rH34JJRO,
+      - GOOGLE_CLIENT_SECRET=5JBU_s0ify6ujnKgNv-L5LYhTrHKuRzS_klGYmzmPVs4NFYnHhzffYNIUX2oYP2i
+      - NATS_URL=nats://nats:4222
     depends_on:
       - nats
       - database
+
+  # test:
+  #   build:
+  #     context: ../../
+  #     dockerfile: docker/dev/Dockerfile
+  #   command: ["npm", "run", "test:cov"]
+  #   links:
+  #    - database
+  #   environment:
+  #     POSTGRES_HOST: database
+  #     POSTGRES_PORT: 5432
+  #     POSTGRES_USERNAME: postgres
+  #     POSTGRES_PASSWORD: test
+  #     POSTGRES_DATABASE: test
+  #     NATS_URL: nats://nats:4222
+  #   depends_on:
+  #     - nats
+  #     - database
