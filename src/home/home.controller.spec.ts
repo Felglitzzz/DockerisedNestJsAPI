@@ -1,18 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HomeController } from './home.controller';
+import { INestApplication } from '@nestjs/common';
+import * as request from 'supertest';
 
 describe('Home Controller', () => {
-  let controller: HomeController;
+  let homeController: HomeController;
+  let app: INestApplication;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [HomeController],
     }).compile();
 
-    controller = module.get<HomeController>(HomeController);
-  });
+    app = module.createNestApplication();
+    await app.init();
+  })
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  it(`should return a welcome message`, () => {
+    return request(app.getHttpServer())
+      .get('/')
+      .expect(200)
+      .expect({
+        message: "Hi there, welcome to  the partner portal API"
+      })
   });
 });
