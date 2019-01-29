@@ -1,7 +1,7 @@
 FROM node:8.4.0
 
-WORKDIR /myandela-server
+WORKDIR /DockerisedNestJsAPI
 
-COPY . /myandela-server
+COPY . /DockerisedNestJsAPI
 
 RUN npm install
