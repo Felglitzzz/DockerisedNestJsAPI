@@ -5,3 +5,5 @@ WORKDIR /DockerisedNestJsAPI
 COPY . /DockerisedNestJsAPI
 
 RUN npm install
+
+CMD [ "npm", "start" ]
