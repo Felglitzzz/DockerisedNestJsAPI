@@ -1,3 +1,4 @@
+import { HomeController } from './home/home.controller';
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common'
 import { HelmetMiddleware } from '@nest-middlewares/helmet'
 import { CorsMiddleware } from '@nest-middlewares/cors'
@@ -68,6 +69,7 @@ const statusMonitorConfig: StatusMonitorConfiguration = {
   providers: [
     GoogleStrategy, Auth0Strategy, JwtStrategy,
   ],
+  controllers: [HomeController],
   imports: [
     StatusMonitorModule.setUp(statusMonitorConfig),
     DatabaseModule, NatsModule,
